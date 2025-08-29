@@ -12,28 +12,38 @@ class HomePage extends ConsumerWidget {
     final moviesAsync = ref.watch(popularMoviesProvider);
 
     return Scaffold(
+      backgroundColor: Colors.black,
       appBar: AppBar(
-        title: const Text("MovieApp"),
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        backgroundColor: Colors.transparent,
         elevation: 0,
+        title: const Text(
+          "MovieApp",
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 22,
+            color: Colors.white,
+          ),
+        ),
       ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Header Section
+            // Section Title
             Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const Text(
                     "Popular This Week",
                     style: TextStyle(
-                      fontSize: 20,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white,
                     ),
                   ),
-                  TextButton(
+                  TextButton.icon(
                     onPressed: () {
                       Navigator.push(
                         context,
@@ -42,7 +52,10 @@ class HomePage extends ConsumerWidget {
                         ),
                       );
                     },
-                    child: const Text("See All"),
+                    label: const Text(
+                      "See All",
+                      style: TextStyle(color: Colors.redAccent),
+                    ),
                   ),
                 ],
               ),
@@ -57,34 +70,25 @@ class HomePage extends ConsumerWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 12),
                   itemCount: movies.length > 10 ? 10 : movies.length,
                   itemBuilder: (context, index) {
+                    final movie = movies[index];
                     return Container(
-                      width: 120,
-                      child: MovieCard(movie: movies[index]),
+                      width: 130,
+                      margin: const EdgeInsets.only(right: 4),
+                      child: MovieCard(movie: movie), 
                     );
                   },
                 ),
               ),
-              loading: () => Container(
-                height: 200,
-                child: const Center(child: CircularProgressIndicator()),
+              loading: () => const SizedBox(
+                height: 210,
+                child: Center(child: CircularProgressIndicator()),
               ),
-              error: (err, _) => Container(
-                height: 200,
+              error: (err, _) => SizedBox(
+                height: 210,
                 child: Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Icon(
-                        Icons.error_outline,
-                        size: 32,
-                        color: Colors.grey,
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
-                        "Failed to load movies",
-                        style: TextStyle(color: Colors.grey[600]),
-                      ),
-                    ],
+                  child: Text(
+                    "Failed to load movies",
+                    style: TextStyle(color: Colors.grey[400]),
                   ),
                 ),
               ),
