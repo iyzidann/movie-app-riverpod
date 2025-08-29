@@ -11,10 +11,15 @@ class MovieListPage extends ConsumerWidget {
     final moviesAsync = ref.watch(popularMoviesProvider);
 
     return Scaffold(
+      backgroundColor: Colors.black,
       appBar: AppBar(
-        title: const Text("Popular Movies"),
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        title: const Text(
+          "Popular Movies",
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: Colors.black,
         elevation: 0,
+        iconTheme: const IconThemeData(color: Colors.white),
       ),
       body: moviesAsync.when(
         data: (movies) => Padding(
@@ -28,7 +33,9 @@ class MovieListPage extends ConsumerWidget {
             itemBuilder: (context, index) => MovieCard(movie: movies[index]),
           ),
         ),
-        loading: () => const Center(child: CircularProgressIndicator()),
+        loading: () => const Center(
+          child: CircularProgressIndicator(color: Colors.white),
+        ),
         error: (err, _) => Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -36,19 +43,17 @@ class MovieListPage extends ConsumerWidget {
               const Icon(
                 Icons.error_outline,
                 size: 64,
-                color: Colors.grey,
+                color: Colors.white70,
               ),
               const SizedBox(height: 16),
-              Text(
+              const Text(
                 "Something went wrong",
-                style: Theme.of(context).textTheme.headlineSmall,
+                style: TextStyle(color: Colors.white, fontSize: 20),
               ),
               const SizedBox(height: 8),
               Text(
                 err.toString(),
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: Colors.grey[600],
-                    ),
+                style: const TextStyle(color: Colors.white70),
                 textAlign: TextAlign.center,
               ),
             ],
@@ -59,6 +64,6 @@ class MovieListPage extends ConsumerWidget {
   }
 
   int _getCrossAxisCount(BuildContext context) {
-    return 4;
+    return 4; // Desktop/Tablet default
   }
 }
