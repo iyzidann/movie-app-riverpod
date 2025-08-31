@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movie_app_riverpod/features/movies/data/models/movie_model.dart';
+import 'package:movie_app_riverpod/features/movies/presentation/pages/movie_detail_page.dart';
 
 class MovieCard extends StatelessWidget {
   final Movie movie;
@@ -10,7 +11,11 @@ class MovieCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        // TODO: navigasi ke detail page
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => MovieDetailPage(movieId: movie.id),
+          ),
+        );
       },
       child: Container(
         margin: const EdgeInsets.all(4),
