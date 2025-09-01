@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:movie_app_riverpod/features/movies/logic/detail/movie_detail_provider.dart';
 import 'package:movie_app_riverpod/features/movies/data/models/movie_detail_model.dart';
+import 'package:movie_app_riverpod/features/movies/presentation/widgets/movie_detail_skeleton.dart';
 
 class MovieDetailPage extends ConsumerWidget {
   final int movieId;
@@ -14,9 +15,7 @@ class MovieDetailPage extends ConsumerWidget {
 
     return movieDetailAsync.when(
       data: (movie) => _buildDetail(context, movie),
-      loading: () => const Scaffold(
-        body: Center(child: CircularProgressIndicator()),
-      ),
+      loading: () => const MovieDetailSkeleton(),
       error: (err, _) => Scaffold(
         body: Center(
           child: Text("Error: $err"),
